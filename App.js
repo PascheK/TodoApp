@@ -25,24 +25,19 @@ export default function App() {
       {/* Today's tasks */}
       <View style={styles.tasksWrapper}>
         <Text style={styles.sectionTitle}>Today's tasks</Text>
-        <ScrollView contentContainerStyle={{
-          flexGrow: 1
-        }}
-          keyboardShouldPersistTaps='handled'>
-          <View style={styles.items}>
-            {/* This is where the tasks will go! */}
-            {
-              taskItems.map((item, index) => {
-                return (
-                  <TouchableOpacity key={index} onPress={() => completeTask(index)} >
-                    <Task text={item} />
+        <View style={styles.items}>
+          {/* This is where the tasks will go! */}
+          {
+            taskItems.map((item, index) => {
+              return (
+                <TouchableOpacity key={index} onPress={() => completeTask(index)} >
+                <Task text={item} />
 
-                  </TouchableOpacity>
-                )
-              })
-            }
-          </View>
-        </ScrollView>
+                </TouchableOpacity>
+              )
+            })
+          }
+        </View>
       </View>
 
       {/* Write a task */}
