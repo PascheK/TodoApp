@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Platform, KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard } from 'react-native';
+import { Platform, KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView } from 'react-native';
 import Task from './components/Task';
 
 export default function App() {
@@ -19,23 +19,30 @@ export default function App() {
   };
 
   return (
+
     <View style={styles.container}>
+
       {/* Today's tasks */}
       <View style={styles.tasksWrapper}>
         <Text style={styles.sectionTitle}>Today's tasks</Text>
-        <View style={styles.items}>
-          {/* This is where the tasks will go! */}
-          {
-            taskItems.map((item, index) => {
-              return (
-                <TouchableOpacity key={index} onPress={() => completeTask(index)} >
-                <Task text={item} />
+        <ScrollView contentContainerStyle={{
+          flexGrow: 1
+        }}
+          keyboardShouldPersistTaps='handled'>
+          <View style={styles.items}>
+            {/* This is where the tasks will go! */}
+            {
+              taskItems.map((item, index) => {
+                return (
+                  <TouchableOpacity key={index} onPress={() => completeTask(index)} >
+                    <Task text={item} />
 
-                </TouchableOpacity>
-              )
-            })
-          }
-        </View>
+                  </TouchableOpacity>
+                )
+              })
+            }
+          </View>
+        </ScrollView>
       </View>
 
       {/* Write a task */}
@@ -63,10 +70,12 @@ const styles = StyleSheet.create({
   tasksWrapper: {
     paddingTop: 80,
     paddingHorizontal: 20,
+    height: '80%',
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: 'bold',
+    paddingBottom: 20,
   },
   items: {
     marginTop: 30,
@@ -90,7 +99,7 @@ const styles = StyleSheet.create({
   },
   addWrapper: {
     width: 60,
-    height: 60,
+    height: 80,
     backgroundColor: '#FFF',
     borderRadius: 60,
     justifyContent: 'center',
