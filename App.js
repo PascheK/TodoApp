@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Platform, KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView } from 'react-native';
 import Task from './components/Task';
 
+
 export default function App() {
+ 
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
 
@@ -17,30 +20,32 @@ export default function App() {
     itemsCopy.splice(index, 1);
     setTaskItems(itemsCopy);
   };
-
   return (
 
     <View style={styles.container}>
-
-      {/* Today's tasks */}
       <View style={styles.tasksWrapper}>
         <Text style={styles.sectionTitle}>Today's tasks</Text>
-        <View style={styles.items}>
-          {/* This is where the tasks will go! */}
-          {
-            taskItems.map((item, index) => {
-              return (
-                <TouchableOpacity key={index} onPress={() => completeTask(index)} >
-                <Task text={item} />
 
-                </TouchableOpacity>
-              )
-            })
-          }
-        </View>
+        <ScrollView contentContainerStyle={{
+          flexGrow: 1
+        }}>
+          <View style={styles.items}>
+            {/* This is where the tasks will go! */}
+            {
+              taskItems.map((item, index) => {
+                return (
+                  <TouchableOpacity key={index} onPress={() => completeTask(index)} >
+                    <Task text={item} />
+
+                  </TouchableOpacity>
+                )
+              })
+            }
+
+          </View>
+        </ScrollView>
+
       </View>
-
-      {/* Write a task */}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeTaskWrapper}
@@ -53,6 +58,7 @@ export default function App() {
         </TouchableOpacity>
       </KeyboardAvoidingView>
     </View>
+
   );
 }
 
@@ -60,17 +66,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#E8EAED',
-
   },
   tasksWrapper: {
     paddingTop: 80,
     paddingHorizontal: 20,
-    height: '80%',
+    height: '95%',
+    paddingBottom: 80,
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    paddingBottom: 20,
   },
   items: {
     marginTop: 30,
@@ -94,7 +99,7 @@ const styles = StyleSheet.create({
   },
   addWrapper: {
     width: 60,
-    height: 80,
+    height: 60,
     backgroundColor: '#FFF',
     borderRadius: 60,
     justifyContent: 'center',
